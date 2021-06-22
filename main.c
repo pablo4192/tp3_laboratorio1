@@ -18,7 +18,7 @@
      9. Guardar los datos de los empleados en el archivo datos.bin (modo binario).
     10. Salir
 *****************************************************/
-
+//**Hecho en Codeblocks**
 
 
 int main()

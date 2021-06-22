@@ -1,0 +1,76 @@
+# depslib dependency file v1.0
+1623712546 source:c:\users\kiano\desktop\programacion\tp3_laboratorio1\controller.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+
+1623712546 c:\users\kiano\desktop\programacion\tp3_laboratorio1\linkedlist.h
+
+1623712546 c:\users\kiano\desktop\programacion\tp3_laboratorio1\employee.h
+
+1623712546 source:c:\users\kiano\desktop\programacion\tp3_laboratorio1\employee.c
+
+1623712868 source:c:\users\kiano\desktop\programacion\tp3_laboratorio1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+
+1623712546 c:\users\kiano\desktop\programacion\tp3_laboratorio1\controller.h
+
+1623712546 source:c:\users\kiano\desktop\programacion\tp3_laboratorio1\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+
+1624323303 source:c:\users\kiano\desktop\tp3_laboratorio1\controller.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+	"utn.h"
+	"parse.h"
+
+1623712546 c:\users\kiano\desktop\tp3_laboratorio1\linkedlist.h
+
+1624322358 c:\users\kiano\desktop\tp3_laboratorio1\employee.h
+
+1624322358 source:c:\users\kiano\desktop\tp3_laboratorio1\employee.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"utn.h"
+	<string.h>
+
+1624322365 source:c:\users\kiano\desktop\tp3_laboratorio1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"utn.h"
+
+1624322411 c:\users\kiano\desktop\tp3_laboratorio1\controller.h
+
+1624322411 source:c:\users\kiano\desktop\tp3_laboratorio1\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+
+1623873158 source:c:\users\kiano\desktop\tp3_laboratorio1\utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"utn.h"
+
+1623872640 c:\users\kiano\desktop\tp3_laboratorio1\utn.h
+
+1624200435 c:\users\kiano\desktop\tp3_laboratorio1\parse.h
+

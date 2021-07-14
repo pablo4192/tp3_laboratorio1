@@ -26,7 +26,9 @@ int main()
     char seguir='s';
     char confirma;
     int flagAlta=0;
-    int nextId=1001;
+    int flagSeCargo=0;
+
+    int nextId=1;
 
     LinkedList* listaEmpleados = ll_newLinkedList();
     if(listaEmpleados==NULL)
@@ -38,28 +40,27 @@ int main()
 
     do
     {
-
         switch(menuOpciones(listaEmpleados))
         {
         case 1:
-            if(!controller_loadFromText("data.txt",listaEmpleados))
+            if(!controller_loadFromText("data.csv",listaEmpleados, &flagSeCargo, flagAlta, nextId))
             {
                 printf("Hubo un problema al cargar el archivo\n");
             }
             else
             {
-                printf("Se cargaron los archivos correctamente\n");
+                printf("Se cargaron los datos desde el archivo 'data.csv' correctamente\n");
             }
             system("pause");
             break;
         case 2:
-            if(!controller_loadFromBinary("datos.bin", listaEmpleados))
+            if(!controller_loadFromBinary("datos.bin", listaEmpleados, &flagSeCargo, flagAlta, nextId))
             {
                 printf("Hubo un problema al cargar los empleados del archivo binario\n");
             }
             else
             {
-                printf("Empleados cargados con exito en archivo binario!!\n");
+                printf("Se cargaron los datos desde el archivo 'datos.bin' correctamente\n");
             }
             system("pause");
             break;
@@ -121,7 +122,7 @@ int main()
             system("pause");
             break;
         case 8:
-            if(!controller_saveAsText("data.txt", listaEmpleados, flagAlta, &nextId))
+            if(!controller_saveAsText("data.csv", listaEmpleados, flagAlta, &nextId, flagSeCargo))
             {
                 printf("Hubo un problema al guardar los datos en el archivo de texto\n");
             }

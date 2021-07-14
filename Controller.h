@@ -9,7 +9,7 @@
  * \return int
  *
  */
-int controller_loadFromText(char* path , LinkedList* pArrayListEmployee);
+int controller_loadFromText(char* path , LinkedList* pArrayListEmployee, int* flagYaSeCargo, int flagAlta, int nextId);
 
 /** \brief Carga los datos de los empleados desde el archivo datos.bin (modo binario).
  *
@@ -18,7 +18,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee);
  * \return int
  *
  */
-int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee);
+int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee, int* flagYaSeCargo, int flagAlta, int nextId);
 
 /** \brief Alta de empleados
  *
@@ -72,7 +72,7 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee);
  * \return int
  *
  */
-int controller_saveAsText(char* path , LinkedList* pArrayListEmployee, int flagAlta, int* nextId);
+int controller_saveAsText(char* path , LinkedList* pArrayListEmployee, int flagAlta, int* nextId, int flagSeCargo);
 
 /** \brief Guarda los datos de los empleados en el archivo datos.bin (modo binario).
  *

@@ -7,11 +7,19 @@
 
 
 
-int controller_loadFromText(char* path, LinkedList* pArrayListEmployee)
+int controller_loadFromText(char* path, LinkedList* pArrayListEmployee, int* flagSeCargo, int flagAlta, int nextId)
 {
     int todoOk=0;
+    int mayor;
 
-    if(pArrayListEmployee!=NULL && path!=NULL)
+    eEmployee* auxEmpleado=NULL;
+
+    if(*flagSeCargo)
+    {
+        printf("Ya se realizo la carga de los datos\n");
+    }
+
+    if(pArrayListEmployee!=NULL && path!=NULL && *flagSeCargo==0)
     {
         FILE* f=fopen(path, "r");
         if(f!=NULL)
@@ -19,22 +27,46 @@ int controller_loadFromText(char* path, LinkedList* pArrayListEmployee)
 
             if(parser_EmployeeFromText(f, pArrayListEmployee))
             {
-
+                *flagSeCargo=1;
                 todoOk=1;
             }
         }
         fclose(f);
+
+        if(flagAlta==1) //si doy de alta antes de cargar los datos:
+        {
+            buscarMayorId(pArrayListEmployee, &mayor); //busco el id mayor en el linkedList para sumarlo al id que se dio de alta manualmente y queden actualizados
+            for(int i=0; i<nextId-1; i++)              //por ejemplo: di de alta 1 empleado (va a tener id 1), le sumo 1000 (que es el mayor id), me queda ese empleado con el id 1001
+            {
+                auxEmpleado= (eEmployee*) ll_get(pArrayListEmployee, i);
+                if(auxEmpleado!=NULL)
+                {
+                    auxEmpleado->id+=(mayor-1);         //para que el id quede correcto le resto 1 a mayor por que la funcion buscarMayorId me da el id actualizado (id++)
+                    ll_set(pArrayListEmployee, i, auxEmpleado);
+
+                }
+            }
+            printf("Se actualizaron los id de los empleados cargados manualmente antes de cargar los datos desde el archivo\n\n");
+
+        }
     }
 
     return todoOk;
 }
 
 
-int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee)
+int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee, int* flagSeCargo, int flagAlta, int nextId)
 {
     int retorno=0;
+    int mayor;
+    eEmployee* auxEmpleado=NULL;
 
-    if(path!=NULL && pArrayListEmployee!=NULL)
+    if(*flagSeCargo)
+    {
+        printf("Ya se realizo la carga de los datos\n");
+    }
+
+    if(path!=NULL && pArrayListEmployee!=NULL && *flagSeCargo==0)
     {
         FILE* f=fopen(path, "rb");
         if(f==NULL)
@@ -44,11 +76,29 @@ int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee)
         else
         {
             parser_EmployeeFromBinary(f, pArrayListEmployee);
+            *flagSeCargo=1;
             retorno=1;
         }
+
+        fclose(f);
+
+        if(flagAlta==1 && *flagSeCargo==1) //si doy de alta antes de cargar los datos:
+        {
+            buscarMayorId(pArrayListEmployee, &mayor); //busco el id mayor en el linkedList para sumarlo al id que se dio de alta manualmente y queden actualizados
+            for(int i=0; i<nextId-1; i++)              //por ejemplo: di de alta 1 empleado (va a tener id 1), le sumo 1000 (que es el mayor id), me queda ese empleado con el id 1001
+            {
+                auxEmpleado= (eEmployee*) ll_get(pArrayListEmployee, i);
+                if(auxEmpleado!=NULL)
+                {
+                    auxEmpleado->id+=(mayor-1);         //para que el id quede correcto le resto 1 a mayor por que la funcion buscarMayorId me da el id actualizado (id++)
+                    ll_set(pArrayListEmployee, i, auxEmpleado);
+
+                }
+            }
+            printf("Se actualizaron los id de los empleados cargados manualmente antes de cargar los datos desde el archivo\n\n");
+
+        }
     }
-
-
     return retorno;
 }
 
@@ -61,6 +111,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* id, int* flagAlt
     char nombre[20];
     int horasTrabajadas;
     int sueldo;
+
     eEmployee* auxEmpleado=NULL;
 
     printf("***Alta de empleado***\n\n");
@@ -79,42 +130,38 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* id, int* flagAlt
 
             printf("Se le asigno el legajo: %d\n", auxEmpleado->id);
 
-            utn_getStringChar(nombre, "Ingrese Nombre: \n", "Error ingrese Nombre: \n", 3, 20, 3);
-
-            if(!employee_setNombre(auxEmpleado, nombre))
+            if(utn_getStringChar(nombre, "Ingrese Nombre: \n", "Error ingrese Nombre: \n", 3, 20, 3))
             {
-                printf("Hubo un error al guardar el Nombre\n");
-            }
-            else
-            {
-                utn_getNumero(&horasTrabajadas, "Ingrese horas trabajadas: \n", "Error ingrese horas trabajadas: \n", 0, 1000, 3);
-                if(!employee_setHorasTrabajadas(auxEmpleado, horasTrabajadas))
+                if(!employee_setNombre(auxEmpleado, nombre))
                 {
-                    printf("Hubo un error al guardar las horas trabajadas\n");
+                    printf("Hubo un error al guardar el Nombre\n");
                 }
                 else
                 {
-                    utn_getNumero(&sueldo, "Ingrese sueldo: \n", "Error ingrese sueldo: \n", 0, 1000000, 3);
-                    if(!employee_setSueldo(auxEmpleado, sueldo))
+                    utn_getNumero(&horasTrabajadas, "Ingrese horas trabajadas: \n", "Error ingrese horas trabajadas: \n", 0, 1000, 3);
+                    if(!employee_setHorasTrabajadas(auxEmpleado, horasTrabajadas))
                     {
-                        printf("Hubo un error al guardar el sueldo\n");
+                        printf("Hubo un error al guardar las horas trabajadas\n");
                     }
                     else
                     {
-                        (*id)++;
-                        *flagAlta=1;
-                        ll_add(pArrayListEmployee, auxEmpleado);
+                        utn_getNumero(&sueldo, "Ingrese sueldo: \n", "Error ingrese sueldo: \n", 0, 1000000, 3);
+                        if(!employee_setSueldo(auxEmpleado, sueldo))
+                        {
+                            printf("Hubo un error al guardar el sueldo\n");
+                        }
+                        else
+                        {
+                            (*id)++;
+                            *flagAlta=1;
+                            ll_add(pArrayListEmployee, auxEmpleado);
 
-                        auxEmpleado=NULL;
-                        todoOk=1;
-
-
-
+                            auxEmpleado=NULL;
+                            todoOk=1;
+                        }
                     }
-
                 }
             }
-
         }
     }
 
@@ -365,7 +412,7 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 }
 
 
-int controller_saveAsText(char* path, LinkedList* pArrayListEmployee, int flagAlta, int* nextId)
+int controller_saveAsText(char* path, LinkedList* pArrayListEmployee, int flagAlta, int* nextId, int flagSeCargo)
 {
     int retorno=0;
     char confirma;
@@ -373,10 +420,9 @@ int controller_saveAsText(char* path, LinkedList* pArrayListEmployee, int flagAl
 
     if(path!=NULL && pArrayListEmployee!=NULL)
     {
-        //printf("valor de flagAlta= %d\n", flagAlta);
-        if(flagAlta==1)
+        if(flagAlta==1 || flagSeCargo==1)
         {
-            confirmacion(&confirma, "Atencion se van a sobreescribir los datos del archivo 'data.txt', verifique si asi lo desea de haber cargado el archivo con la opcion 1\nDesea sobrescribir el archivo? s(si) / n(no): \n", "Error", 1);
+            confirmacion(&confirma, "Atencion se van a sobreescribir los datos del archivo 'data.csv', verifique si asi lo desea de haber cargado el archivo con la opcion 1\nDesea sobrescribir el archivo? s(si) / n(no): \n", "Error", 1);
         }
 
         if(confirma=='s')

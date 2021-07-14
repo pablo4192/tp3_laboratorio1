@@ -15,14 +15,14 @@ int menuOpciones(LinkedList* lista)
 
 
     printf("***Menu de opciones***\n\n");
-    printf("1. Cargar los datos de los empleados desde el archivo data.txt (modo texto).\n");
+    printf("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n");
     printf("2. Cargar los datos de los empleados desde el archivo datos.bin (modo binario).\n");
     printf("3. Alta de empleado\n");
     printf("4. Modificar datos de empleado\n");
     printf("5. Baja de empleado\n");
     printf("6. Listar empleados\n");
     printf("7. Ordenar empleados\n");
-    printf("8. Guardar los datos de los empleados en el archivo data.txt (modo texto).\n");
+    printf("8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n");
     printf("9. Guardar los datos de los empleados en el archivo datos.bin (modo binario).\n");
     printf("10. Salir\n");
     utn_getNumero(&opcion, "Escoja una opcion (1 al 10): \n", "Error, escoja una opcion valida (1 al 10): \n", 1, 10, 3);
